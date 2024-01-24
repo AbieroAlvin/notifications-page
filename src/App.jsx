@@ -27,7 +27,7 @@ const notificationsData = [
   },
   {
     id: 2,
-    type: "followed",
+    type: "follow",
     name: "Angela Gray",
     profile: Angela,
     time: "5m",
@@ -40,6 +40,7 @@ const notificationsData = [
     profile: Jacob,
     time: "1 day",
     group: "Chess Club",
+    text: "has joined your group",
     read: false,
   },
   {
@@ -59,7 +60,7 @@ const notificationsData = [
     profile: Kimberly,
     time: "1 week",
     commentPic: CommentPic,
-    read: true,
+    read: false,
   },
   {
     id: 6,
@@ -68,7 +69,7 @@ const notificationsData = [
     profile: Nathan,
     post: "5 end-game strategies to increase your win rate",
     time: "2 weeks",
-    read: true,
+    read: false,
   },
   {
     id: 7,
@@ -76,8 +77,9 @@ const notificationsData = [
     name: "Anna Kim",
     profile: Anna,
     time: "1 day",
+    text: "left the group",
     group: "Chess Club",
-    read: true,
+    read: false,
   },
 ];
 
@@ -106,25 +108,26 @@ function App() {
   };
 
   return (
-    <div className="w-full h-screen flex items-center justify-center font-body">
-      <div className="">
-        <div className="w-full flex items-center justify-between">
+    <div className="w-full  h-full flex items-center justify-center font-body bg-Verylightgrayishblue p-8 ">
+      <div className="w-full p-4 bg-white shadow-xl rounded-md max-w-[650px] text-Darkgrayishblue">
+        <div className="w-full flex items-center justify-between p-4">
           {/* unread counter */}
           <div className="font-body flex items-center">
-            <h1>Notifications</h1>
-            <div className="bg-Blue text-white rounded-md p-1.5">
+            <h1 className="text-Verydarkblue font-bold">Notifications</h1>
+            <div className="bg-Blue text-white rounded-md p-1 ml-2 text-[12px] ">
               {unreadCount}
             </div>
           </div>
           {/* mark all */}
           <div onClick={() => markAll()}>
-            <p className="cursor-pointer text-[14px]">Mark all as read</p>
+            <p className="cursor-pointer text-[14px] hover:text-Verydarkblue hover:underline underline-offset-4">
+              Mark all as read
+            </p>
           </div>
         </div>
 
         <div className="flex flex-col gap-6">
           {notifications.map((notification) => {
-            const bgClass = notification.read ? "bg-gray-200" : "bg-purple-100";
             switch (notification.type) {
               case "reacted":
                 return (
@@ -134,7 +137,10 @@ function App() {
                     type={notification.type}
                     read={notification.read}
                     onMarkAsRead={markRead}
-                    bgClass={bgClass}
+                    name={notification.name}
+                    post={notification.post}
+                    time={notification.time}
+                    profile={notification.profile}
                   />
                 );
               case "follow":
@@ -145,7 +151,9 @@ function App() {
                     type={notification.type}
                     read={notification.read}
                     onMarkAsRead={markRead}
-                    bgClass={bgClass}
+                    name={notification.name}
+                    time={notification.time}
+                    profile={notification.profile}
                   />
                 );
               case "joinedGroup":
@@ -156,7 +164,11 @@ function App() {
                     type={notification.type}
                     read={notification.read}
                     onMarkAsRead={markRead}
-                    bgClass={bgClass}
+                    name={notification.name}
+                    time={notification.time}
+                    profile={notification.profile}
+                    post={notification.text}
+                    group={notification.group}
                   />
                 );
               case "message":
@@ -168,7 +180,9 @@ function App() {
                     read={notification.read}
                     onMarkAsRead={markRead}
                     message={notification.message}
-                    bgClass={bgClass}
+                    name={notification.name}
+                    time={notification.time}
+                    profile={notification.profile}
                   />
                 );
               case "comment":
@@ -179,7 +193,10 @@ function App() {
                     type={notification.type}
                     read={notification.read}
                     onMarkAsRead={markRead}
-                    bgClass={bgClass}
+                    name={notification.name}
+                    time={notification.time}
+                    profile={notification.profile}
+                    commentPic={notification.commentPic}
                   />
                 );
               case "leftGroup":
@@ -190,11 +207,65 @@ function App() {
                     type={notification.type}
                     read={notification.read}
                     onMarkAsRead={markRead}
-                    bgClass={bgClass}
+                    name={notification.name}
+                    time={notification.time}
+                    profile={notification.profile}
+                    post={notification.text}
+                    group={notification.group}
                   />
                 );
             }
           })}
+          {/* {notifications.map((notification) => {
+            <div key={notification.id} className="flex flex-col">
+              <Reacted
+                id={notification.id}
+                type={notification.type}
+                read={notification.read}
+                onMarkAsRead={markRead}
+                name={notification.name}
+                post={notification.post}
+                time={notification.time}
+                profile={notification.profile}
+              />
+
+              <Follow
+                id={notification.id}
+                type={notification.type}
+                read={notification.read}
+                onMarkAsRead={markRead}
+              />
+
+              <Group
+                id={notification.id}
+                type={notification.type}
+                read={notification.read}
+                onMarkAsRead={markRead}
+              />
+
+              <Message
+                id={notification.id}
+                type={notification.type}
+                read={notification.read}
+                onMarkAsRead={markRead}
+                message={notification.message}
+              />
+
+              <Comment
+                id={notification.id}
+                type={notification.type}
+                read={notification.read}
+                onMarkAsRead={markRead}
+              />
+
+              <Group
+                id={notification.id}
+                type={notification.type}
+                read={notification.read}
+                onMarkAsRead={markRead}
+              />
+            </div>;
+          })} */}
         </div>
       </div>
     </div>

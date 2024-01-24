@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;800&display=swap");
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --Red: hsl(1, 90%, 64%);
   --Blue: hsl(219, 85%, 26%);
